@@ -1,0 +1,46 @@
+body {
+    background-image: url("../Images/penguins.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.instructions {
+    text-align: center;
+    margin: 0 150px 0 150px;
+    font-weight: bold;
+    font-size: 18;
+    background-color: rgba(255, 255, 255, 0.658);
+    border: 2px solid black;
+    padding: 5px;
+
+}
+.gifdiv {
+    display: flex;
+    justify-content: center;
+    margin:15px;
+}
+#quiz {
+    display: flex;
+    
+    flex-direction: column;
+}
+#start {
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: 33.5%;
+}
+.container {
+    margin-left: 40%;
+    width: 35%;
+    color: rgb(0, 5, 8);
+}
+#submit {
+    font-weight: bold;
+    font-size: 20px; 
+    margin-right:25px;
+    margin: 15px 25px 0 0;
+}
+#reset {
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 15px
+}
