@@ -5,6 +5,8 @@ $(document).ready(function () {
     var useranswers = [];
     var correct = 0;
     var timeleft;
+    var timervalue = 60 * 2;
+    var clockRunning = false;
     function createdivs() {
         var formcreater = $('<form id ="quiz"></form>')
         $('.container').append(formcreater);
@@ -17,7 +19,7 @@ $(document).ready(function () {
     function createquestions() {
         createdivs();
         createbuttons();
-        timeleft = setTimeout(gradequiz, 240000) //4 Min timer
+        timeleft = setTimeout(gradequiz, 120000) //2 Min timer
         for (i = 0; i < questions.length; i++) {
             $("#question-" + i).append(questions[i] + "<br>");
             $('#question-' + i).append('<input type="radio" name="q' + i + '" id="tf' + i + '" value="true"> true <br>').css("background-color", "rgba(255, 255, 255, 0.658)").css("border", "2px solid black").css("margin", "5px").css("padding", "5px")
@@ -39,11 +41,37 @@ $(document).ready(function () {
             }
 
         }
-
+        clearInterval(intervalId);
+        clockRunning = false;
         alert(correct + '/' + questions.length);
         console.log(useranswers)
         return useranswers;
 
+    }
+    function count() {
+        timervalue--
+        var timeleft = timeConverter(timervalue)
+
+        $('#timer').text(timeleft)
+        console.log(timeleft)
+    }
+    function timeConverter(t) {
+
+        var minutes = Math.floor(t / 60);
+        var seconds = t - (minutes * 60);
+
+        if (seconds < 10) {
+            seconds = "0" + seconds;
+        }
+
+        if (minutes === 0) {
+            minutes = "00";
+        }
+        else if (minutes < 10) {
+            minutes = "0" + minutes;
+        }
+
+        return minutes + ":" + seconds;
     }
     function createbuttons() {
         var submitbutton = $('<button id="submit">Submit</button>')
@@ -54,19 +82,33 @@ $(document).ready(function () {
     $(document).on('click', '#submit', function () {
         gradequiz();
         clearTimeout(timeleft);
+        $('.container').empty()
+        $('.gifdiv').append('<img src="https://media1.giphy.com/media/Uo0CJ8l5kVh2E/giphy.gif?cid=3640f6095c95d85938655a3767c73957" alt="">')
+        clearInterval(intervalId);
+        clockRunning = false;
+        timervalue = 120;
+        $('#timer').empty();
         // console.log(useranswers)
     })
 
     $(document).on('click', '#reset', function () {
-        $('.container').empty()
         clearTimeout(timeleft);
+        $('.container').empty()
         $('.gifdiv').append('<img src="https://media1.giphy.com/media/Uo0CJ8l5kVh2E/giphy.gif?cid=3640f6095c95d85938655a3767c73957" alt="">')
+        clearInterval(intervalId);
+        clockRunning = false;
+        timervalue = 120;
+        $('#timer').empty();
         // console.log(useranswers)
     })
     $('#start').click(function () {
         $('.container').empty()
         createquestions();
         $('.gifdiv').empty()
+        if (!clockRunning) {
+            intervalId = setInterval(count, 1000);
+            clockRunning = true;
+        }
 
     })
 });
